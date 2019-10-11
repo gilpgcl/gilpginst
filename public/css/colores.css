@@ -1,0 +1,9 @@
+:root {
+  --color-letra: white;
+  --color-fondo: black;
+  --color-principal: white;
+  --color-fondo-principal: black;
+  --color-principal: #ffffff;
+  --color-fondo-principal-button: rgb(33, 48, 134);
+  --color-secundario: #FF4081;
+}
