@@ -48,10 +48,10 @@ customElements.define("mi-diapo", class extends HTMLImageElement {
         if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
           if (xDiff > 0) {
             /* left swipe */
-            retrocede(this);
+            avanza(this);
           } else {
             /* right swipe */
-            avanza(this);
+            retrocede(this);
           }
         } else {
           if (yDiff > 0) {
