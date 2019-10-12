@@ -24,12 +24,21 @@ customElements.define("mi-diapo", class extends HTMLImageElement {
       }
     }
     document.addEventListener("keydown", evt => {
-      switch (evt.keyCode) {
-        case 37: // izq
+      switch (evt.key) {
+        case "ArrowLeft":
           retrocede(this);
           break;
-        case 39: // der
+        case "ArrowRight":
           avanza(this);
+          break;
+        case "x":
+          antes(this);
+      }
+    });
+    document.body.addEventListener("keyup", evt => {
+      switch (evt.key) {
+        case "Escape":
+          antes(this);
       }
     });
     document.addEventListener('touchstart', evt => {
@@ -45,24 +54,25 @@ customElements.define("mi-diapo", class extends HTMLImageElement {
         var xDiff = xDown - xUp;
         var yDiff = yDown - yUp;
 
-        if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
-          if (xDiff > 0) {
-            /* left swipe */
-            avanza(this);
-          } else {
-            /* right swipe */
-            retrocede(this);
-          }
-        } else {
-          if (yDiff > 0) {
+        if (Math.abs(xDiff) + Math.abs(yDiff) > 150) { //to deal with to short swipes
+          if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
+            if (xDiff > 70) {
+              /* left swipe */
+              avanza(this);
+            } else {
+              /* right swipe */
+              retrocede(this);
+            }
+          } else if (yDiff > 0) {
             /* up swipe */
+            antes(this);
           } else {
             /* down swipe */
           }
+          /* reset values */
+          xDown = null;
+          yDown = null;
         }
-        /* reset values */
-        xDown = null;
-        yDown = null;
       }
     });
 
@@ -87,6 +97,14 @@ customElements.define("mi-diapo", class extends HTMLImageElement {
     function muestra(obj) {
       obj.src = (obj.dataset.url + actual) + ".jpg";
       location.hash = "#" + actual;
+    }
+
+    /**
+     * @param {HTMLImageElement} obj */
+    function antes(obj) {
+      if (obj.dataset.antes) {
+        location.href = encodeURI(obj.dataset.antes);
+      }
     }
   }
 }, { extends: "img" });
