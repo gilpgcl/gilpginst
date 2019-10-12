@@ -6,7 +6,7 @@ const ARCHIVOS = [
   "cmp/mi-diapo.js",
   "css/colores.css",
   "css/estilos.css",
-  "img/inst.png",
+  "img/icono.png",
   "lib/polycustom.js",
   "lib/registraServiceWorker.js",
   "lib/util.js",
