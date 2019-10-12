@@ -7,7 +7,7 @@ const ARCHIVOS = [
   "css/colores.css",
   "css/estilos.css",
   "img/inst.png",
-  "lib/elems.js",
+  "lib/polycustom.js",
   "lib/registraServiceWorker.js",
   "lib/util.js",
   "cuenta_gmail.html",
