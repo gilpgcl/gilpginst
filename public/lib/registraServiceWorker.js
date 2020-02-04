@@ -1,7 +1,5 @@
 import { error } from "./util.js";
 registraServiceWorker();
-/* Registra un service worker para instalar la aplicación en el
- * caché del navegador. */
 async function registraServiceWorker() {
   if ("serviceWorker" in navigator) {
     try {

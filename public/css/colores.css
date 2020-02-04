@@ -1,9 +1,10 @@
 :root {
-  --color-letra: white;
-  --color-fondo: black;
-  --color-principal: white;
-  --color-fondo-principal: black;
-  --color-principal: #ffffff;
-  --color-fondo-principal-button: rgb(33, 48, 134);
+  --color-letra: black;
+  --color-fondo: white;
+  --color-sombra: #55535380;
+  --color-fondo-dialogo: #e7e7e7e2;
+  --color-fondo-nota: yellow;
+  --color-principal: black;
+  --color-fondo-principal: #d4af37e2;
   --color-secundario: #FF4081;
 }
