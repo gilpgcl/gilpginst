@@ -22,7 +22,7 @@ header {
   color: var(--color-principal);
 }
 
-header h1 {
+h1 {
   margin: 0;
   height: 1.3em;
   font-size: 1.3em;
