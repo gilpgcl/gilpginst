@@ -43,6 +43,7 @@ document.head.innerHTML += /* html */
       width:100%;
       height: 100%;
       background-color: var(--color-fondo-dialogo);
+      overflow: auto;
       z-index: 4;
     }
     mi-diapo nav p {
@@ -77,30 +78,32 @@ customElements.define("mi-diapo", class extends HTMLElement {
           </button>
           <h1></h1>
         </header>
-        <p>
-          Diapositiva <output class="outputActual"></output> /
-          <output class="outputTotal"></output>
-        </p>`
-      + (urlanterior ? /*html*/
-        `<p>
-          <a href="${urlanterior}"><i
-            class="material-icons">navigate_before</i>${textoanterior}</a>
-        </p>`: "")
-      + (urlmenu ? /*html*/
-        `<p><a href="${urlmenu}">${textomenu}</a></p>` : "")
-      + (this.urlsiguiente ? /*html*/
-        `<p>
-          <a href="${this.urlsiguiente}">${this.textosiguiente}<i
-            class="material-icons">navigate_next</i></a>
-        </p>`: "")
-      + /*html*/
-      ` <p>Para avanzar diapositivas tienes las siguientes opciones:</p>
-        <ul>
-          <li>Las flechas de izquierda o derecha de un teclado.</li> 
-          <li>Swipe izquierdo o derecho en una pantalla tactil.</li>
-        </ul>
-        <mi-footer></mi-footer>
-      </nav>`;
+        <div class="marco-640">
+          <p>
+            Diapositiva <output class="outputActual"></output> /
+            <output class="outputTotal"></output>
+          </p>`
+        + (urlanterior ? /*html*/
+          `<p>
+            <a href="${urlanterior}"><i
+              class="material-icons">navigate_before</i>${textoanterior}</a>
+          </p>`: "")
+        + (urlmenu ? /*html*/
+          `<p><a href="${urlmenu}">${textomenu}</a></p>` : "")
+        + (this.urlsiguiente ? /*html*/
+          `<p>
+            <a href="${this.urlsiguiente}">${this.textosiguiente}<i
+              class="material-icons">navigate_next</i></a>
+          </p>`: "")
+        + /*html*/
+        ` <p>Para avanzar diapositivas tienes las siguientes opciones:</p>
+          <ul>
+            <li>Las flechas de izquierda o derecha de un teclado.</li> 
+            <li>Swipe izquierdo o derecho en una pantalla tactil.</li>
+          </ul>
+          <mi-footer></mi-footer>
+        </nav>
+      </div>`;
     const fragmento = location.hash.trim().replace(/^\#/, "");
     this.actual = fragmento ? parseInt(fragmento, 10) : 1;
     this.total = this.dataset.total ? parseInt(this.dataset.total, 10) : 1000;

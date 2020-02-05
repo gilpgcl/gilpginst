@@ -40,6 +40,14 @@ header button {
   cursor: pointer
 }
 
+.marco-640 {
+  flex-grow: 1;
+  padding: 1em;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 nav li {
   margin: 1em;
 }
