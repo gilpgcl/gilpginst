@@ -50,7 +50,7 @@ document.head.innerHTML += /* html */
     }
     mi-diapo .nota p {
       background-color: var(--color-fondo-nota);
-      box-shadow: 0 1em var(--color-sombra);
+      box-shadow: 0 7px 5px 3px var(--color-sombra);
       margin: auto;
       padding: 1em;
     }
@@ -116,7 +116,7 @@ customElements.define("mi-diapo", class extends HTMLElement {
     this.nota = this.querySelector(".nota");
     this.nav = this.querySelector("nav");
     enlazaAcciones(this.nav, this);
-    this.nota.addEventListener("click", () => this.nav.hidden = false);
+    this.nota.addEventListener("click", this.muestraNav.bind(this));
     addEventListener("resize", this.resize.bind(this));
     this.muestra();
     this.resize();
@@ -128,10 +128,17 @@ customElements.define("mi-diapo", class extends HTMLElement {
         case "ArrowRight":
           this.avanza();
           break;
+        case "ArrowUp":
+          this.muestraNav();
+          break;
       }
     });
     addEventListener("swipeizquierdo", this.avanza.bind(this));
     addEventListener("swipederecho", this.retrocede.bind(this));
+    addEventListener("swipearriba", this.muestraNav.bind(this));
+  }
+  muestraNav() {
+    this.nav.hidden = false;
   }
   /**
    * 
