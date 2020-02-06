@@ -70,7 +70,8 @@ customElements.define("mi-diapo", class extends HTMLElement {
     this.textosiguiente = cod(this.dataset.textosiguiente);
     this.innerHTML = /* html */
       `<img>
-      <div class="nota" data-eventos="click" data-acciones="muestraNav"></div>
+      <div class="nota" data-eventos="dblclick"
+        data-acciones="muestraNav"></div>
       <nav hidden>
         <header>
           <button type="button" data-eventos="click" data-acciones="cierra"
@@ -146,6 +147,12 @@ customElements.define("mi-diapo", class extends HTMLElement {
           break;
       }
     });
+    document.addEventListener("keyup", evt => {
+      switch (evt.key) {
+        case "Escape":
+          this.cierra();
+      }
+    });
     addEventListener("swipeizquierdo", this.avanza.bind(this));
     addEventListener("swipederecho", this.retrocede.bind(this));
     addEventListener("swipearriba", this.muestraNav.bind(this));
@@ -153,12 +160,8 @@ customElements.define("mi-diapo", class extends HTMLElement {
   muestraNav() {
     this.nav.hidden = false;
   }
-  /**
-   * 
-   * @param {Event} evt 
-   */
-  cierra(evt) {
-    evt.preventDefault();
+  cierra() {
+    document.getSelection().removeAllRanges();
     this.nav.hidden = true;
   }
   /** @todo Mejorar el algoritmo. */
