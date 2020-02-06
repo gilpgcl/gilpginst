@@ -28,7 +28,8 @@ h1 {
   font-size: 1.3em;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap
+  white-space: nowrap;
+  margin-right: auto;
 }
 
 header button {

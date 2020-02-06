@@ -70,33 +70,40 @@ customElements.define("mi-diapo", class extends HTMLElement {
     this.textosiguiente = cod(this.dataset.textosiguiente);
     this.innerHTML = /* html */
       `<img>
-      <div class="nota"></div>
+      <div class="nota" data-eventos="click" data-acciones="muestraNav"></div>
       <nav hidden>
         <header>
-          <button data-eventos="click" data-acciones="cierra" title="Cerrar">
+          <button type="button" data-eventos="click" data-acciones="cierra"
+              title="Cerrar">
             <i class="material-icons">close</i>
           </button>
           <h1></h1>
-        </header>
+          <button class="btnRetrocede" data-eventos="click"
+              data-acciones="retrocede">
+            <i class="material-icons">skip_previous</i></button>
+          <button class="btnAvanza" data-eventos="click" data-acciones="avanza">
+            <i class="material-icons">skip_next</i>
+          </button>
+      </header>
         <div class="marco-640">
           <p>
             Diapositiva <output class="outputActual"></output> /
             <output class="outputTotal"></output>
           </p>`
-        + (urlanterior ? /*html*/
-          `<p>
+      + (urlanterior ? /*html*/
+        `<p>
             <a href="${urlanterior}"><i
               class="material-icons">navigate_before</i>${textoanterior}</a>
           </p>`: "")
-        + (urlmenu ? /*html*/
-          `<p><a href="${urlmenu}">${textomenu}</a></p>` : "")
-        + (this.urlsiguiente ? /*html*/
-          `<p>
+      + (urlmenu ? /*html*/
+        `<p><a href="${urlmenu}">${textomenu}</a></p>` : "")
+      + (this.urlsiguiente ? /*html*/
+        `<p>
             <a href="${this.urlsiguiente}">${this.textosiguiente}<i
               class="material-icons">navigate_next</i></a>
           </p>`: "")
-        + /*html*/
-        ` <p>Para avanzar diapositivas tienes las siguientes opciones:</p>
+      + /*html*/
+      ` <p>Para avanzar diapositivas tienes las siguientes opciones:</p>
           <ul>
             <li>Las flechas de izquierda o derecha de un teclado.</li> 
             <li>Swipe izquierdo o derecho en una pantalla tactil.</li>
@@ -118,8 +125,11 @@ customElements.define("mi-diapo", class extends HTMLElement {
     /** @type {HTMLElement} */
     this.nota = this.querySelector(".nota");
     this.nav = this.querySelector("nav");
-    enlazaAcciones(this.nav, this);
-    this.nota.addEventListener("click", this.muestraNav.bind(this));
+    /** @type {HTMLButtonElement} */
+    this.btnRetrocede = this.querySelector(".btnRetrocede");
+    /** @type {HTMLButtonElement} */
+    this.btnAvanza = this.querySelector(".btnAvanza");
+    enlazaAcciones(this, this);
     addEventListener("resize", this.resize.bind(this));
     this.muestra();
     this.resize();
@@ -179,6 +189,8 @@ customElements.define("mi-diapo", class extends HTMLElement {
     location.hash = "#" + this.actual;
     this.outputActual.value = this.actual.toString();
     this.nota.innerHTML = "";
+    this.btnAvanza.hidden = this.actual === this.total;
+    this.btnRetrocede.hidden = this.actual === 1;
     const res = await fetch(encodeURI(this.url + this.actual + ".html"));
     if (res.ok) {
       this.nota.innerHTML = await res.text();
