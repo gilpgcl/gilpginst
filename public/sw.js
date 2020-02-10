@@ -1,4 +1,4 @@
-const CACHE = "gilpginst-1.23";
+const CACHE = "gilpginst-1.002";
 const CACHE_EXTRA = "gilpginstExtra";
 // Archivos requeridos para que la aplicación funcione fuera de línea.
 const ARCHIVOS = [
@@ -14,20 +14,21 @@ const ARCHIVOS = [
   "css/MaterialIcons-Regular.ttf",
   "css/MaterialIcons-Regular.woff",
   "css/MaterialIcons-Regular.woff2",
-  "img/icono.png",
   "lib/databind.js",
   "lib/htmlUtil.js",
   "lib/registraServiceWorker.js",
   "lib/swipe.js",
   "lib/title.js",
-  "lib/util.js",
+  "chrome.html",
   "cuenta_gmail.html",
   "cuenta_oracle.html",
   "favicon.ico",
+  "firebcli.html",
+  "firefox.html",
   "git.html",
+  "icono.png",
   "index.html",
   "jdk8.html",
-  "jelastic.html",
   "jeliot3.html",
   "manifest.json",
   "netbeans.html",

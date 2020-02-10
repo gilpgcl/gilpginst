@@ -3,11 +3,11 @@
   "name": "Instalaciones",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#000",
-  "theme_color": "#000000",
+  "background_color": "#fff",
+  "theme_color": "#d4af37e2",
   "icons": [
     {
-      "src": "img/icono.png",
+      "src": "icono.png",
       "sizes": "2048x2048",
       "type": "image/png"
     }

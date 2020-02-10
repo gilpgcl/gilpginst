@@ -1,4 +1,3 @@
-import { error } from "./util.js";
 registraServiceWorker();
 async function registraServiceWorker() {
   if ("serviceWorker" in navigator) {
@@ -7,7 +6,8 @@ async function registraServiceWorker() {
       console.log("Service Worker registrado.");
       console.log(registro);
     } catch (e) {
-      error(e);
+      console.error(e);
+      alert(e.message);
     }
   }
 }

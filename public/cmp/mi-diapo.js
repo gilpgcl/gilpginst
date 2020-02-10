@@ -49,6 +49,9 @@ document.head.innerHTML += /* html */
     mi-diapo nav p {
       margin: 1em;
     }
+    mi-diapo nav a, mi-diapo nav span {
+      display: inline-block;
+    }
     mi-diapo .nota p {
       background-color: var(--color-fondo-nota);
       box-shadow: 0 7px 5px 3px var(--color-sombra);
@@ -72,7 +75,7 @@ customElements.define("mi-diapo", class extends HTMLElement {
       `<img>
       <div class="nota" data-eventos="dblclick"
         data-acciones="muestraNav"></div>
-      <nav hidden>
+      <nav>
         <header>
           <button type="button" data-eventos="click" data-acciones="cierra"
               title="Cerrar">
@@ -82,36 +85,47 @@ customElements.define("mi-diapo", class extends HTMLElement {
           <button class="btnRetrocede" data-eventos="click"
               data-acciones="retrocede">
             <i class="material-icons">skip_previous</i></button>
+          <span>
+            <output class="outputActual"></output> /
+            <output class="outputTotal"></output>
+          </span>
           <button class="btnAvanza" data-eventos="click" data-acciones="avanza">
             <i class="material-icons">skip_next</i>
           </button>
-      </header>
-        <div class="marco-640">
-          <p>
-            Diapositiva <output class="outputActual"></output> /
-            <output class="outputTotal"></output>
-          </p>`
+        </header>
+        <div class="marco-640">`
       + (urlanterior ? /*html*/
-        `<p>
-            <a href="${urlanterior}"><i
-              class="material-icons">navigate_before</i>${textoanterior}</a>
-          </p>`: "")
+        ` <a href="${urlanterior}"><i
+            class="material-icons">navigate_before</i>${textoanterior}</a>`
+        : "")
       + (urlmenu ? /*html*/
-        `<p><a href="${urlmenu}">${textomenu}</a></p>` : "")
+        ` <a href="${urlmenu}">${textomenu}</a>` : "")
       + (this.urlsiguiente ? /*html*/
-        `<p>
-            <a href="${this.urlsiguiente}">${this.textosiguiente}<i
-              class="material-icons">navigate_next</i></a>
-          </p>`: "")
+        ` <a href="${this.urlsiguiente}">${this.textosiguiente}<i
+            class="material-icons">navigate_next</i></a>`: "")
       + /*html*/
-      ` <p>Para avanzar diapositivas tienes las siguientes opciones:</p>
-          <ul>
-            <li>Las flechas de izquierda o derecha de un teclado.</li> 
-            <li>Swipe izquierdo o derecho en una pantalla tactil.</li>
-          </ul>
+      `   <h2>Instrucciones</h2>
+          <dl>
+            <dt>Ver la diapositiva</dt>
+            <dd>Cerrar el panel de navegación con Esc o botón de cerrar.</dd>
+            <dt>Diapositiva Siguiente</dt>
+            <dd>
+              <i class="material-icons">skip_next</i>, flecha derecha del
+              teclado o swipe a la izquierda.
+            </dd>
+            <dt>Diapositiva Anterior</dt>
+            <dd>
+              <i class="material-icons">skip_previous</i>, flecha izquierda del
+              teclado o swipe a la derecha.
+            </dd>
+            <dt>Abrir el panel de navegación</dt>
+            <dd>
+              Doble clic, flecha arriba del teclado o swipe hacia arriba.
+            </dd>
+           </dl>
           <mi-footer></mi-footer>
-        </nav>
-      </div>`;
+        </div>
+      </nav>`;
     const fragmento = location.hash.trim().replace(/^\#/, "");
     this.actual = fragmento ? parseInt(fragmento, 10) : 1;
     this.total = this.dataset.total ? parseInt(this.dataset.total, 10) : 1000;
