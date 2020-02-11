@@ -107,7 +107,7 @@ customElements.define("mi-diapo", class extends HTMLElement {
       `   <h2>Instrucciones</h2>
           <dl>
             <dt>Ver la diapositiva</dt>
-            <dd>Cerrar el panel de navegación con Esc o botón de cerrar.</dd>
+            <dd>Cerrar este panel de navegación con Esc o botón de cerrar.</dd>
             <dt>Diapositiva Siguiente</dt>
             <dd>
               <i class="material-icons">skip_next</i>, flecha derecha del
@@ -118,7 +118,7 @@ customElements.define("mi-diapo", class extends HTMLElement {
               <i class="material-icons">skip_previous</i>, flecha izquierda del
               teclado o swipe a la derecha.
             </dd>
-            <dt>Abrir el panel de navegación</dt>
+            <dt>Abrir este panel de navegación</dt>
             <dd>
               Doble clic, flecha arriba del teclado o swipe hacia arriba.
             </dd>

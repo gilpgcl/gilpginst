@@ -1,4 +1,4 @@
-const CACHE = "gilpginst-1.002";
+const CACHE = "gilpginst-1.006";
 const CACHE_EXTRA = "gilpginstExtra";
 // Archivos requeridos para que la aplicación funcione fuera de línea.
 const ARCHIVOS = [
@@ -26,6 +26,7 @@ const ARCHIVOS = [
   "firebcli.html",
   "firefox.html",
   "git.html",
+  "github.html",
   "icono.png",
   "index.html",
   "jdk8.html",
