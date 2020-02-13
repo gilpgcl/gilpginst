@@ -1,4 +1,4 @@
-const CACHE = "gilpginst-1.007";
+const CACHE = "gilpginst-1.008";
 const CACHE_EXTRA = "gilpginstExtra";
 // Archivos requeridos para que la aplicación funcione fuera de línea.
 const ARCHIVOS = [
