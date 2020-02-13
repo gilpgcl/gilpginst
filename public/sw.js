@@ -1,4 +1,4 @@
-const CACHE = "gilpginst-1.006";
+const CACHE = "gilpginst-1.007";
 const CACHE_EXTRA = "gilpginstExtra";
 // Archivos requeridos para que la aplicación funcione fuera de línea.
 const ARCHIVOS = [
@@ -37,18 +37,20 @@ const ARCHIVOS = [
   '/'
 ];
 
+// @ts-ignore
 self.addEventListener("install",
-  /** @param {InstallEvent} evt */
+  /** @param {{waitUntil:(pr:Promise)=>void}} evt */
   evt => {
     console.log("Service Worker instalado.");
     // Realiza la instalación: carga los archivos requeridos en la caché.
     evt.waitUntil(cargaCache());
   });
+// @ts-ignore
 self.addEventListener("fetch",
-  /** @param {FetchEvent} evt */
-  evt => {
-    if (evt.request.method === "GET") {
-      evt.respondWith(cargaRequest(evt));
+  /**@param {{request: Request;respondWith:(pr:Promise<Response>) =>void}} ev*/
+  ev => {
+    if (ev.request.method === "GET") {
+      ev.respondWith(cargaRequest(ev));
     }
   });
 self.addEventListener("activate", () => console.log("Service Worker activo."));
@@ -60,15 +62,13 @@ async function cargaCache() {
   console.log("Cache cargado: " + CACHE);
 }
 /**
-* @param {FetchEvent} evt
-* @returns {Promise<Response>} */
+ * @param {{ request: Request; }} evt
+ * @returns {Promise<Response>}*/
 async function cargaRequest(evt) {
   const cache = await caches.open(CACHE);
-  const respCache =
-    await cache.match(evt.request, { ignoreSearch: true });
+  const respCache = await cache.match(evt.request, { ignoreSearch: true });
   if (respCache) {
-    // Si lo encuentra en la caché pequeña devuelve esta y actualiza.
-    actualizaResponse(cache, evt.request);
+    // Si lo encuentra en la caché pequeña devuelve esta.
     return respCache;
   } else {
     // Como no está en la caché pequeña, lo busca en la grande.
