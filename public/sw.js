@@ -1,7 +1,8 @@
-const CACHE = "gilpginst-1.008";
-const CACHE_EXTRA = "gilpginstExtra";
+const CACHE = "gilpginst-1.014";
+const CACHE_EXTRA = "gilpginstExtra-1.001";
 // Archivos requeridos para que la aplicación funcione fuera de línea.
 const ARCHIVOS = [
+  "cmp/a-regresa.js",
   "cmp/mi-diapo.js",
   "cmp/mi-footer.js",
   "css/codepoints",
@@ -15,7 +16,10 @@ const ARCHIVOS = [
   "css/MaterialIcons-Regular.woff",
   "css/MaterialIcons-Regular.woff2",
   "lib/databind.js",
+  "lib/document-register-element.js",
   "lib/htmlUtil.js",
+  "lib/min.js",
+  "lib/polycustom.js",
   "lib/registraServiceWorker.js",
   "lib/swipe.js",
   "lib/title.js",
@@ -34,6 +38,7 @@ const ARCHIVOS = [
   "manifest.json",
   "netbeans.html",
   "payara.html",
+  "vscode.html",
   '/'
 ];
 
@@ -47,7 +52,7 @@ self.addEventListener("install",
   });
 // @ts-ignore
 self.addEventListener("fetch",
-  /**@param {{request: Request;respondWith:(pr:Promise<Response>) =>void}} ev*/
+  /**@param {{request: Request;respondWith:(pr:Promise<Response>) =>void}} ev */
   ev => {
     if (ev.request.method === "GET") {
       ev.respondWith(cargaRequest(ev));
@@ -61,6 +66,7 @@ async function cargaCache() {
   await cache.addAll(ARCHIVOS);
   console.log("Cache cargado: " + CACHE);
 }
+
 /**
  * @param {{ request: Request; }} evt
  * @returns {Promise<Response>}*/
@@ -81,6 +87,7 @@ async function cargaRequest(evt) {
     return respCacheImg ? respCacheImg : respFetch;
   }
 }
+
 /**
  * @param {Cache} cache
  * @param {Request} request

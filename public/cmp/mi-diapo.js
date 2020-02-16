@@ -1,5 +1,5 @@
-import { cod } from "../lib/htmlUtil.js";
 import { enlazaAcciones } from "../lib/databind.js";
+import { getURLSearchParam } from "../lib/htmlUtil.js";
 document.head.innerHTML += /* html */
   `<style>
     body, mi-diapo, mi-diapo .nota, mi-diapo nav {
@@ -46,10 +46,7 @@ document.head.innerHTML += /* html */
       overflow: auto;
       z-index: 4;
     }
-    mi-diapo nav p {
-      margin: 1em;
-    }
-    mi-diapo nav a, mi-diapo nav span {
+    mi-diapo nav span {
       display: inline-block;
     }
     mi-diapo .nota p {
@@ -62,15 +59,6 @@ document.head.innerHTML += /* html */
 
 customElements.define("mi-diapo", class extends HTMLElement {
   connectedCallback() {
-    const urlanterior =
-      this.dataset.urlanterior ? encodeURI(this.dataset.urlanterior) : "";
-    const textoanterior = cod(this.dataset.textoanterior);
-    const urlmenu =
-      this.dataset.urlmenu ? encodeURI(this.dataset.urlmenu) : "";
-    const textomenu = cod(this.dataset.textomenu);
-    this.urlsiguiente =
-      this.dataset.urlsiguiente ? encodeURI(this.dataset.urlsiguiente) : "";
-    this.textosiguiente = cod(this.dataset.textosiguiente);
     this.innerHTML = /* html */
       `<img>
       <div class="nota" data-eventos="dblclick"
@@ -93,18 +81,9 @@ customElements.define("mi-diapo", class extends HTMLElement {
             <i class="material-icons">skip_next</i>
           </button>
         </header>
-        <div class="marco-640">`
-      + (urlanterior ? /*html*/
-        ` <a href="${urlanterior}"><i
-            class="material-icons">navigate_before</i>${textoanterior}</a>`
-        : "")
-      + (urlmenu ? /*html*/
-        ` <a href="${urlmenu}">${textomenu}</a>` : "")
-      + (this.urlsiguiente ? /*html*/
-        ` <a href="${this.urlsiguiente}">${this.textosiguiente}<i
-            class="material-icons">navigate_next</i></a>`: "")
-      + /*html*/
-      `   <h2>Instrucciones</h2>
+        <div class="marco-640">
+          <p>Regresa a <a class="regresa"></a></p>
+          <h2>Instrucciones</h2>
           <dl>
             <dt>Ver la diapositiva</dt>
             <dd>Cerrar este panel de navegación con Esc o botón de cerrar.</dd>
@@ -128,6 +107,9 @@ customElements.define("mi-diapo", class extends HTMLElement {
       </nav>`;
     const fragmento = location.hash.trim().replace(/^\#/, "");
     this.actual = fragmento ? parseInt(fragmento, 10) : 1;
+    this.ancho = this.dataset.ancho ? parseInt(this.dataset.ancho, 10) : 800;
+    this.alto = this.dataset.alto ? parseInt(this.dataset.alto, 10) : 600;
+    this.relAspecto = this.ancho / this.alto;
     this.total = this.dataset.total ? parseInt(this.dataset.total, 10) : 1000;
     this.url = this.dataset.url || "";
     this.extensión = this.dataset.extension || ".png";
@@ -144,6 +126,10 @@ customElements.define("mi-diapo", class extends HTMLElement {
     this.btnRetrocede = this.querySelector(".btnRetrocede");
     /** @type {HTMLButtonElement} */
     this.btnAvanza = this.querySelector(".btnAvanza");
+    /** @type {HTMLAnchorElement} */
+    this.regresa = this.querySelector(".regresa");
+    this.regresa.href = getURLSearchParam("href");
+    this.regresa.textContent = getURLSearchParam("text");
     enlazaAcciones(this, this);
     addEventListener("resize", this.resize.bind(this));
     this.muestra();
@@ -180,8 +166,9 @@ customElements.define("mi-diapo", class extends HTMLElement {
   }
   /** @todo Mejorar el algoritmo. */
   resize() {
-    if (document.documentElement.clientHeight
-      >= document.documentElement.clientWidth) {
+    const docElem = document.documentElement;
+    const relAspectoDoc =  docElem.clientWidth / docElem.clientHeight;
+    if (this.relAspecto > relAspectoDoc) {
       this.img.classList.add("alta");
       this.img.classList.remove("ancha");
     } else {
@@ -211,11 +198,6 @@ customElements.define("mi-diapo", class extends HTMLElement {
     const res = await fetch(encodeURI(this.url + this.actual + ".html"));
     if (res.ok) {
       this.nota.innerHTML = await res.text();
-    }
-  }
-  siguiente() {
-    if (this.urlsiguiente) {
-      location.href = this.urlsiguiente;
     }
   }
 });
